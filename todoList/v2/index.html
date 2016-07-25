@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        
+        <table cellspacing=0 id="todoTable">
+            <thead>
+                <tr>
+                    <th colspan=3>ToDo List</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+            
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="text" placeHolder="Type your task..." id="newTask">
+                        <button onClick="addNewTask()">ADD</button>
+                        <button onClick="save()">SAVE</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+    <script src="todolist.js">
+    </script>
+    
+    <script>
+        var tasks = loadTask();
+        printTask();
+    </script>
+    
+    </body>
+</html>

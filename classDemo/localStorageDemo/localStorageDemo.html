@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Title of the document</title>
+</head>
+
+<body>
+
+    <button onClick="setColor('red')">red</button>
+    <button onClick="setColor('blue')">blue</button>
+    <button onClick="setColor('yellow')">yellow</button>
+    
+</body>
+
+<script>
+if (typeof localStorage.bgColor !== 'undefined') {
+	document.querySelector('body').style.backgroundColor = localStorage.bgColor;
+}
+
+function setColor(color) {
+	localStorage.bgColor = color;
+}
+    
+</script>
+
+</html>

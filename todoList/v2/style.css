@@ -1,0 +1,18 @@
+            thead th {
+                background-color: #111174;
+                color: white;
+            }
+            th, td { 
+                
+                padding: 20px;
+                text-align: center;
+                text-transform: uppercase;
+                font-family: arial;
+            }
+            tr.checked td {
+                text-decoration: line-through;
+                color: gray;
+            }
+            tr td:nth-child(2) {
+                border-left: 5px double blue;
+            }

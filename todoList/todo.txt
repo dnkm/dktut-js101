@@ -1,0 +1,8 @@
+1. Add "id" to tbody for content
+2. Task's status field should be of type boolean
+3. Add Reset
+4. Add checkbox functionalities
+4b. Do not use printList
+5. Local Storage (save btn)
+5a. Change Header Color
+5b. Save button
