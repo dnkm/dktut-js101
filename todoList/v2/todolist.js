@@ -1,9 +1,7 @@
-
-
-function loadTask() {
+function loadTasks() {
     tasks = localStorage.getItem("tasks");
     
-    if (tasks == null) {
+    if (tasks == null || tasks.length == 0) {
         tasks = [];
     } else {
         tasks = JSON.parse(tasks);
@@ -12,9 +10,8 @@ function loadTask() {
     return tasks;
 }
 
-function printTask() {
-    localStorage.setItem("tasks",JSON.stringify(tasks));
-    
+
+function printList() {
     var tableDOM = document.querySelector("#todoTable");
     var tbodyDOM = tableDOM.querySelector("tbody");
     
@@ -24,14 +21,35 @@ function printTask() {
         var task = tasks[k];
         
         var tr = document.createElement("tr");
-        tr.innerHTML = "<td><input type=\"checkbox\"></td>" +
-                "<td>" + task.text + "</td>";
+        tr.innerHTML = `<td><input type="checkbox" onClick="handleCheck(this)"></td>   
+                        <td>${task.text}</td>
+                        `;
         tbodyDOM.appendChild(tr);
     }
 }
 
 function addNewTask() {
     var newTask = document.querySelector("#newTask").value;
+    document.querySelector("#newTask").value = "";
     tasks.push({text: newTask, status: ""});
-    printTask();
+    printList();
+}
+
+function reset() {
+    tasks = [];
+    printList();
+}
+
+function setColor(color) {
+    document.querySelector("#todotable th").style.backgroundColor = color;
+    localStorage.color = color;
+}
+
+function save() {
+    var txt = JSON.stringify(tasks);
+    localStorage.tasks = txt;
+}
+
+function handleCheck(event) {
+    event.parentNode.parentNode.className = "checked";
 }

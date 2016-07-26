@@ -20,6 +20,22 @@
                     <td>
                         <input type="text" placeHolder="Type your task..." id="newTask">
                         <button onClick="addNewTask()">ADD</button>
+                        <button onClick="reset()">
+                            RESET
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <button onClick="setColor('pink')">pink</button>
+                        <button onClick="setColor('skyblue')">skyblue</button>
+                        <button onClick="setColor('beige')">beige</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
                         <button onClick="save()">SAVE</button>
                     </td>
                 </tr>
@@ -30,8 +46,10 @@
     </script>
     
     <script>
-        var tasks = loadTask();
-        printTask();
+        var tasks = loadTasks();
+        printList();
+        
+        setColor(localStorage.color);
     </script>
     
     </body>
