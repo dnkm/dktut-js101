@@ -12,8 +12,11 @@ function drawFrame() {
     ctx.clearRect(0, 0, cv.width, cv.height);   // ADD 1
 
     ctx.strokeStyle="blue";
+    ctx.fillStyle = 'green';
+    ctx.lineWidth = 5;
     ctx.beginPath();
     ctx.arc(x,y,r,0,2*Math.PI);
+    ctx.fill();
     ctx.stroke();
 
     recalculateXY();
@@ -38,6 +41,10 @@ function recalculateXY() {
 
     x += velX;
     y += velY;
+
+    // ADD 3
+    velX *= 0.98;
+    velY *= 0.98;
 }
 
 function handleKeyboard(e) {
@@ -60,7 +67,7 @@ function handleKeyboard(e) {
 
         //down
         case 40:
-                velX--;
+                velY++;
                 break;
     }
 }

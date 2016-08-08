@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <canvas id="cv" height="1000" width="800" style="border: 3px solid black"></canvas>
+  <script>
+    var cv = document.querySelector("#cv");
+    var context = cv.getContext("2d");
+
+    // rect
+    context.fillStyle = "pink";
+    context.fillRect(0, 0, 100, 100);
+
+    context.fillStyle = "skyblue";
+    context.fillRect(100, 100, 100, 100);
+
+    // line
+    context.strokeStyle = "pink";
+    context.moveTo(100,200);
+    context.lineTo(0,300);
+    context.stroke();
+
+    // circle
+    context.beginPath();
+    var radius = Math.sqrt(100*100 + 100*100);
+    context.arc(100, 200, radius, 0, 2 * Math.PI);
+    context.stroke();
+  </script>
+</body>
+</html>
