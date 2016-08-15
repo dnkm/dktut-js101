@@ -14,7 +14,14 @@ class Game {
 
   spawnUnits(num) {
     for (var i = 0; i < num; i++) {
-      var unit = new Unit(this.width / 2, this.height / 2, this.canvas, this.ctx);
+      var x = this.width / 2;
+      var y = this.height / 2;
+
+      x = Math.random() * this.width;
+      y = Math.random() * this.height;
+
+
+      var unit = new Unit(x, y, this.canvas, this.ctx);
       this.units.push(unit);
     }
   }
@@ -36,17 +43,16 @@ class Game {
     for (var i = 0; i < this.units.length; i++) {
       this.units[i].move();
 
-      this.checkCollision(this.units[i]);
+      this.checkCollisions(this.units[i], i);
     }
   }
 
-  checkCollision(unit) {
+  checkCollisions(unit, myI) {
     // check wall collision
     unit.x = Math.min(Math.max(unit.x, 0), this.canvas.width);
     unit.y = Math.min(Math.max(unit.y, 0), this.canvas.height);
 
     if (unit.x % this.canvas.width == 0) {
-      console.log("changing direction");
       unit.velX *= -1;
     }
 
@@ -55,6 +61,27 @@ class Game {
     }
 
     // check unit collision
+    for (var i = 0; i < this.units.length; i++) {
+      if (i == myI) {
+        continue;
+      }
+
+      var collided = this.checkUnitCollision(unit, this.units[i]);
+      if (collided) {
+        this.units[i].isDead = true;
+      }
+    }
+  }
+
+  checkUnitCollision(u1, u2) {
+    // simple check
+    if (Math.abs(u1.x - u2.x) > 1
+      && Math.abs(u1.y - u2.y) > 1
+    ) {
+      return false;
+    }
+
+    return true;
   }
 
   drawUnits() {

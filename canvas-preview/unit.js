@@ -1,5 +1,5 @@
 class Unit {
-    constructor(x, y) {
+    constructor(x, y, type) {
         this.x = x;
         this.y = y;
 
@@ -9,6 +9,9 @@ class Unit {
 
         this.level = 1;
         this.point = 0;
+
+        this.type = type;
+        this.isDead = false;
 
         this.calculateSize();
     }
@@ -28,11 +31,18 @@ class Unit {
     }
 
     move() {
+        if (this.isDead) {
+            return;
+        }
         this.x += this.velX;
         this.y += this.velY;
     }
 
     draw(ctx) {
+        if (this.isDead) {
+            return;
+        }
+
         ctx.fillStyle = this.color;
         ctx.strokeStyle = 'black';
         ctx.lineWidth = this.border;
