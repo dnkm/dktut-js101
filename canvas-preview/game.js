@@ -41,8 +41,11 @@ class Game {
 
   moveUnits() {
     for (var i = 0; i < this.units.length; i++) {
-      this.units[i].move();
+      if (i.isDead) {
+        continue;
+      }
 
+      this.units[i].move();
       this.checkCollisions(this.units[i], i);
     }
   }
@@ -66,20 +69,28 @@ class Game {
         continue;
       }
 
-      var collided = this.checkUnitCollision(unit, this.units[i]);
+      var anotherUnit = this.units[i];
+      if (anotherUnit.isDead) {
+        continue;
+      }
+
+      var collided = this.checkUnitCollision(unit, anotherUnit);
       if (collided) {
-        this.units[i].isDead = true;
+        anotherUnit.isDead = true;
+        unit.isDead = true;
       }
     }
   }
 
   checkUnitCollision(u1, u2) {
     // simple check
-    if (Math.abs(u1.x - u2.x) > 1
-      && Math.abs(u1.y - u2.y) > 1
+    if (Math.abs(u1.x - u2.x) > u1.radius + u2.radius
+      || Math.abs(u1.y - u2.y) > u1.radius + u2.radius
     ) {
       return false;
     }
+
+    console.log(`collision ${u1.x}, ${u1.y} - ${u2.x}, ${u2.y}. raidus: ${u1.radius}, ${u2.radius}`);
 
     return true;
   }
