@@ -1,76 +1,67 @@
-var cv = document.querySelector("#cv");
-var ctx = cv.getContext("2d");
+class Game {
+  constructor(canvas) {
+    this.canvas = canvas;
+    this.ctx = canvas.getContext("2d");
 
+    this.width = canvas.width;
+    this.height = canvas.height;
 
-var x = 100;
-var y = 100;
-var r = 50;
-var velX = 5;
-var velY = 5;
+    this.procId = -1;
+    this.units = [];
+    
+    this.spawnUnits(10);
+  }
 
-function drawFrame() {
-    ctx.clearRect(0, 0, cv.width, cv.height);   // ADD 1
+  spawnUnits(num) {
+    for(var i=0; i<num; i++) {
+      var unit = new Unit(this.width/2, this.height/2, this.canvas, this.ctx);
+      this.units.push(unit);
+    }
+  }
 
-    ctx.strokeStyle="blue";
-    ctx.fillStyle = 'green';
-    ctx.lineWidth = 5;
-    ctx.beginPath();
-    ctx.arc(x,y,r,0,2*Math.PI);
-    ctx.fill();
-    ctx.stroke();
+  start() {
+    var draw = this.draw.bind(this);
+    setInterval(draw, 1000 / 60);
+  }
 
-    recalculateXY();
+  draw() {
+    this.moveUnits();
+    
+    this.ctx.clearRect(0, 0, this.width, this.height);
+    this.drawGrid();
+    this.drawUnits();
+  }
+  
+  moveUnits() {
+    for(var i=0; i<this.units.length; i++) {
+      this.units[i].move();
+    }
+  }
+  
+  drawUnits() {
+    for(var i=0; i<this.units.length; i++) {
+      this.units[i].draw();
+    }
+  }
+
+  drawGrid() {
+    var ctx = this.ctx;
+    ctx.strokeStyle = 'gray';
+    ctx.lineWidth = 1;
+
+    for (var y = 0; y < this.height; y += this.height / 10) {
+      ctx.beginPath();
+      ctx.moveTo(0, y);
+      ctx.lineTo(this.width, y);
+      ctx.stroke();
+    }
+    
+    for (var x = 0; x < this.width; x += this.width / 10) {
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, this.height);
+      ctx.stroke();
+    }
+
+  }
 }
-
-function recalculateXY() {
-    // ADD 1
-    if (x + r >= cv.width) {
-        velX *= -1;
-    }
-    if (y + r >= cv.height) {
-        velY *= -1;
-    }
-
-    // ADD 2
-    if (x - r <= 0) {
-        velX *= -1;
-    }
-    if (y - r <= 0) {
-        velY *= -1;
-    }
-
-    x += velX;
-    y += velY;
-
-    // ADD 3
-    velX *= 0.98;
-    velY *= 0.98;
-}
-
-function handleKeyboard(e) {
-    switch(e.keyCode)
-    {
-        //left
-        case 37:
-                velX--;
-                break;
-
-        //up
-        case 38:
-                velY--;
-                break;
-
-        //right
-        case 39:
-                velX++;
-                break;
-
-        //down
-        case 40:
-                velY++;
-                break;
-    }
-}
-
-setInterval(drawFrame, 1000/60);
-window.addEventListener('keydown', handleKeyboard, false);
