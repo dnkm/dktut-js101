@@ -1,9 +1,7 @@
 class Unit {
-    constructor(x, y, canvas, ctx) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.canvas = canvas;
-        this.ctx = ctx;
 
         this.velX = this.getRandomVel();
         this.velY = this.getRandomVel();
@@ -33,12 +31,12 @@ class Unit {
         this.x += this.velX;
         this.y += this.velY;
 
-        this.x = Math.min(Math.max(this.x, 0), this.canvas.width);
-        this.y = Math.min(Math.max(this.y, 0), this.canvas.height);
+        //this.x = Math.min(Math.max(this.x, 0), this.canvas.width);
+        //this.y = Math.min(Math.max(this.y, 0), this.canvas.height);
     }
 
-    draw() {
-        var ctx = this.ctx;
+    draw(ctx) {
+        
         ctx.fillStyle = this.color;
         ctx.strokeStyle = 'black';
         ctx.lineWidth = this.border;

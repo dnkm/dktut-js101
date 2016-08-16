@@ -33,14 +33,36 @@ class Game {
   }
   
   moveUnits() {
+    /*
     for(var i=0; i<this.units.length; i++) {
       this.units[i].move();
+      this.checkCollision(this.units[i]);
     }
+    */
+    var that = this;
+    this.units.forEach(function(unit) {
+      unit.move();
+      that.checkCollision(unit);
+    });
+  }
+
+  checkCollision(unit) {
+    this.checkCollisionWall(unit);
+    this.checkCollisionObj(unit);
+  }
+
+  checkCollisionWall(unit) {
+    unit.x = Math.min(Math.max(unit.x, 0), this.canvas.width);
+    unit.y = Math.min(Math.max(unit.y, 0), this.canvas.height);
+  }
+
+  checkCollisionObj(unit) {
+    
   }
   
   drawUnits() {
     for(var i=0; i<this.units.length; i++) {
-      this.units[i].draw();
+      this.units[i].draw(this.ctx);
     }
   }
 
