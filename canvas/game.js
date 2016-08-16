@@ -8,13 +8,13 @@ class Game {
 
     this.procId = -1;
     this.units = [];
-    
+
     this.spawnUnits(10);
   }
 
   spawnUnits(num) {
-    for(var i=0; i<num; i++) {
-      var unit = new Unit(this.width/2, this.height/2, this.canvas, this.ctx);
+    for (var i = 0; i < num; i++) {
+      var unit = new Unit(i, this.width * Math.random(), this.height * Math.random(), this.canvas, this.ctx);
       this.units.push(unit);
     }
   }
@@ -26,12 +26,12 @@ class Game {
 
   draw() {
     this.moveUnits();
-    
+
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawGrid();
     this.drawUnits();
   }
-  
+
   moveUnits() {
     /*
     for(var i=0; i<this.units.length; i++) {
@@ -40,7 +40,7 @@ class Game {
     }
     */
     var that = this;
-    this.units.forEach(function(unit) {
+    this.units.forEach(function (unit) {
       unit.move();
       that.checkCollision(unit);
     });
@@ -57,13 +57,37 @@ class Game {
   }
 
   checkCollisionObj(unit) {
-    
+    var that = this;
+    this.units.forEach(function (unit2) {
+      if (unit.id == unit2.id) {
+        return;
+      }
+
+      if (
+        Math.abs(unit.x - unit2.x) < unit.radius + unit2.radius
+        &&
+        Math.abs(unit.y - unit2.y) < unit.radius + unit2.radius
+      ) {
+        console.log(`collision between ${unit.id} & ${unit2.id}`);
+        delete that.units[ unit.id ];
+        delete that.units[ unit2.id ];
+      }
+    });
   }
-  
+
   drawUnits() {
+    /*
     for(var i=0; i<this.units.length; i++) {
       this.units[i].draw(this.ctx);
     }
+    */
+
+    var that = this;
+    this.units.forEach(function (unit) {
+      unit.draw(that.ctx);
+    });
+
+
   }
 
   drawGrid() {
@@ -77,7 +101,7 @@ class Game {
       ctx.lineTo(this.width, y);
       ctx.stroke();
     }
-    
+
     for (var x = 0; x < this.width; x += this.width / 10) {
       ctx.beginPath();
       ctx.moveTo(x, 0);

@@ -1,5 +1,6 @@
 class Unit {
-    constructor(x, y) {
+    constructor(id, x, y) {
+        this.id = id;
         this.x = x;
         this.y = y;
 
@@ -45,5 +46,8 @@ class Unit {
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
+
+        ctx.lineWidth = 1;
+        ctx.strokeRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
     }
 }
