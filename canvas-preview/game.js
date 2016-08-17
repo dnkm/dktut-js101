@@ -3,8 +3,8 @@ class Game {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
 
-    this.width = canvas.width + 20;
-    this.height = canvas.height + 20;
+    this.width = canvas.width + 100;
+    this.height = canvas.height + 100;
 
     this.procId = -1;
     this.units = [];
@@ -33,12 +33,6 @@ class Game {
   }
 
   moveUnits() {
-    /*
-    for(var i=0; i<this.units.length; i++) {
-      this.units[i].move();
-      this.checkCollision(this.units[i]);
-    }
-    */
     var that = this;
     this.units.forEach(function (unit) {
       unit.move();
@@ -77,7 +71,7 @@ class Game {
         &&
         Math.abs(unit.y - unit2.y) < unit.radius + unit2.radius
       ) {
-        console.log(`collision between ${unit.id} & ${unit2.id}`);
+        //console.log(`collision between ${unit.id} & ${unit2.id}`);
         delete that.units[unit.id];
         delete that.units[unit2.id];
       }
@@ -114,7 +108,7 @@ class Game {
     ctx.font = '10px Arial';
     for (var y = 0; y < this.height; y += this.height / 10) {
       for (var x = 0; x < this.width; x += this.width / 10) {
-        ctx.fillText(`${x}`,x,y);
+        ctx.fillText(`${x}`, x, y);
       }
     }
 
