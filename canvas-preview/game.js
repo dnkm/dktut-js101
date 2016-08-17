@@ -3,8 +3,8 @@ class Game {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
 
-    this.width = canvas.width + 100;
-    this.height = canvas.height + 100;
+    this.width = canvas.width * 2;
+    this.height = canvas.height * 2;
 
     this.procId = -1;
     this.units = [];
