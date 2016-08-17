@@ -42,24 +42,26 @@ class Unit {
         }
     }
 
-    draw(ctx) {
+    draw(ctx, vp) {
+
+        var x = this.x - vp.x1;
 
         ctx.fillStyle = this.color;
         ctx.strokeStyle = 'black';
         ctx.lineWidth = this.border;
 
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.arc(x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
         ctx.stroke();
 
         ctx.lineWidth = 1;
-        ctx.strokeRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+        ctx.strokeRect(x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
 
         if (this.id === 0) {
             ctx.fillStyle = 'white';
             ctx.font = "10px Arial";
-            ctx.fillText("P", this.x - 3, this.y + 3);
+            ctx.fillText("P", x - 3, this.y + 3);
         }
     }
 }

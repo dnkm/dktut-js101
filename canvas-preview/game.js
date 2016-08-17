@@ -94,9 +94,17 @@ class Game {
 
   drawUnits() {
     var that = this;
+
+    // calculate viewports
+    var p1 = this.units[0];
+    var vp = {};
+    vp.x1 = p1.x - this.canvas.width / 2;
+    vp.x2 = p1.x + this.canvas.width / 2;
+
     this.units.forEach(function (unit) {
-      unit.draw(that.ctx);
+      unit.draw(that.ctx, vp);
     });
+
   }
 
   drawGrid() {
