@@ -12,7 +12,6 @@ class Unit {
         this.point = 0;
 
         this.calculateSize();
-
         this.moveTimer = 0;
     }
 
@@ -44,7 +43,7 @@ class Unit {
     }
 
     draw(ctx) {
-        
+
         ctx.fillStyle = this.color;
         ctx.strokeStyle = 'black';
         ctx.lineWidth = this.border;
@@ -56,5 +55,11 @@ class Unit {
 
         ctx.lineWidth = 1;
         ctx.strokeRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+
+        if (this.id === 1) {
+            ctx.fillStyle = 'white';
+            ctx.font = "10px Arial";
+            ctx.fillText("P", this.x - 3, this.y + 3);
+        }
     }
 }
