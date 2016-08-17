@@ -21,7 +21,11 @@ class Game {
 
   start() {
     var draw = this.draw.bind(this);
-    setInterval(draw, 1000 / 60);
+    this.procId = setInterval(draw, 1000 / 60);
+  }
+
+  stop() {
+    clearInterval(this.procId);
   }
 
   draw() {
@@ -71,9 +75,14 @@ class Game {
         &&
         Math.abs(unit.y - unit2.y) < unit.radius + unit2.radius
       ) {
-        //console.log(`collision between ${unit.id} & ${unit2.id}`);
+
+        if (unit.id === 0 || unit2.id === 0) {
+          that.stop();
+        }
+
         delete that.units[unit.id];
         delete that.units[unit2.id];
+
       }
     });
   }
