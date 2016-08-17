@@ -16,7 +16,7 @@ class Unit {
 
     getRandomVel() {
         var plusOrMinus = (Math.random() < 0.5) ? -1 : 1;
-        return Math.random() * plusOrMinus;
+        return (1 + 0.5 * Math.random()) * plusOrMinus;
     }
 
     getRandomColor() {

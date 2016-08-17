@@ -54,6 +54,15 @@ class Game {
   checkCollisionWall(unit) {
     unit.x = Math.min(Math.max(unit.x, 0), this.canvas.width);
     unit.y = Math.min(Math.max(unit.y, 0), this.canvas.height);
+
+    if (unit.x % this.canvas.width == 0) {
+      unit.velX *= -1;
+    }
+
+    if (unit.y % this.canvas.height == 0) {
+      unit.velY *= -1;
+    }
+
   }
 
   checkCollisionObj(unit) {
