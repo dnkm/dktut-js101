@@ -78,8 +78,8 @@ class Game {
         Math.abs(unit.y - unit2.y) < unit.radius + unit2.radius
       ) {
         console.log(`collision between ${unit.id} & ${unit2.id}`);
-        delete that.units[ unit.id ];
-        delete that.units[ unit2.id ];
+        delete that.units[unit.id];
+        delete that.units[unit2.id];
       }
     });
   }
@@ -96,18 +96,26 @@ class Game {
     ctx.strokeStyle = 'gray';
     ctx.lineWidth = 1;
 
-    for (var y = 0; y < this.height; y += this.canvas.height / 10) {
+    for (var y = 0; y < this.height; y += this.height / 10) {
       ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(this.width, y);
       ctx.stroke();
     }
 
-    for (var x = 0; x < this.width; x += this.canvas.width / 10) {
+    for (var x = 0; x < this.width; x += this.width / 10) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, this.height);
       ctx.stroke();
+    }
+
+    ctx.fillStyle = 'gray';
+    ctx.font = '10px Arial';
+    for (var y = 0; y < this.height; y += this.height / 10) {
+      for (var x = 0; x < this.width; x += this.width / 10) {
+        ctx.fillText(`${x}`,x,y);
+      }
     }
 
   }
