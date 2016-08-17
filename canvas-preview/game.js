@@ -36,9 +36,11 @@ class Game {
       return;
     }
 
+    var vp = this.getViewport();
+
     this.ctx.clearRect(0, 0, this.width, this.height);
-    this.drawGrid();
-    this.drawUnits();
+    this.drawGrid(vp);
+    this.drawUnits(vp);
   }
 
   moveUnits() {
@@ -92,9 +94,7 @@ class Game {
     });
   }
 
-  drawUnits() {
-    var that = this;
-
+  getViewport() {
     // calculate viewports
     var p1 = this.units[0];
     var vp = {};
@@ -102,29 +102,33 @@ class Game {
     vp.x2 = p1.x + this.canvas.width / 2;
     vp.y1 = p1.y - this.canvas.height / 2;
     vp.y2 = p1.y + this.canvas.height / 2;
+    return vp;
+  }
 
+  drawUnits(vp) {
+    var that = this;
     this.units.forEach(function (unit) {
       unit.draw(that.ctx, vp);
     });
 
   }
 
-  drawGrid() {
+  drawGrid(vp) {
     var ctx = this.ctx;
     ctx.strokeStyle = 'gray';
     ctx.lineWidth = 1;
 
     for (var y = 0; y < this.height; y += this.height / 10) {
       ctx.beginPath();
-      ctx.moveTo(0, y);
-      ctx.lineTo(this.width, y);
+      ctx.moveTo(0 - vp.x1, y - vp.y1);
+      ctx.lineTo(this.width - vp.x1, y - vp.y1);
       ctx.stroke();
     }
 
     for (var x = 0; x < this.width; x += this.width / 10) {
       ctx.beginPath();
-      ctx.moveTo(x, 0);
-      ctx.lineTo(x, this.height);
+      ctx.moveTo(x - vp.x1, 0 - vp.y1);
+      ctx.lineTo(x - vp.x1, this.height - vp.y1);
       ctx.stroke();
     }
 
@@ -132,7 +136,7 @@ class Game {
     ctx.font = '10px Arial';
     for (var y = 0; y < this.height; y += this.height / 10) {
       for (var x = 0; x < this.width; x += this.width / 10) {
-        ctx.fillText(`${x}`, x, y);
+        ctx.fillText(`${x}`, x - vp.x1, y - vp.y1);
       }
     }
 
