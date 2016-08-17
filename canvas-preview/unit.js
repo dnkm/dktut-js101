@@ -1,5 +1,6 @@
 class Unit {
-    constructor(x, y, type) {
+    constructor(id, x, y) {
+        this.id = id;
         this.x = x;
         this.y = y;
 
@@ -10,15 +11,12 @@ class Unit {
         this.level = 1;
         this.point = 0;
 
-        this.type = type;
-        this.isDead = false;
-
         this.calculateSize();
     }
 
     getRandomVel() {
         var plusOrMinus = (Math.random() < 0.5) ? -1 : 1;
-        return (Math.random() + 0.5) * plusOrMinus;
+        return Math.random() * plusOrMinus;
     }
 
     getRandomColor() {
@@ -31,18 +29,15 @@ class Unit {
     }
 
     move() {
-        if (this.isDead) {
-            return;
-        }
         this.x += this.velX;
         this.y += this.velY;
+
+        //this.x = Math.min(Math.max(this.x, 0), this.canvas.width);
+        //this.y = Math.min(Math.max(this.y, 0), this.canvas.height);
     }
 
     draw(ctx) {
-        if (this.isDead) {
-            return;
-        }
-
+        
         ctx.fillStyle = this.color;
         ctx.strokeStyle = 'black';
         ctx.lineWidth = this.border;
@@ -52,10 +47,7 @@ class Unit {
         ctx.fill();
         ctx.stroke();
 
-        //ctx.moveTo(this.x - this.radius, this.y - this.radius);
-
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(this.x - this.radius, this.y - this.radius, this.radius*2, this.radius*2);
+        ctx.lineWidth = 1;
+        ctx.strokeRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
     }
 }

@@ -14,14 +14,7 @@ class Game {
 
   spawnUnits(num) {
     for (var i = 0; i < num; i++) {
-      var x = this.width / 2;
-      var y = this.height / 2;
-
-      x = Math.random() * this.width;
-      y = Math.random() * this.height;
-
-
-      var unit = new Unit(x, y, this.canvas, this.ctx);
+      var unit = new Unit(i, this.width * Math.random(), this.height * Math.random(), this.canvas, this.ctx);
       this.units.push(unit);
     }
   }
@@ -40,65 +33,53 @@ class Game {
   }
 
   moveUnits() {
-    for (var i = 0; i < this.units.length; i++) {
-      if (i.isDead) {
-        continue;
-      }
-
+    /*
+    for(var i=0; i<this.units.length; i++) {
       this.units[i].move();
-      this.checkCollisions(this.units[i], i);
+      this.checkCollision(this.units[i]);
     }
+    */
+    var that = this;
+    this.units.forEach(function (unit) {
+      unit.move();
+      that.checkCollision(unit);
+    });
   }
 
-  checkCollisions(unit, myI) {
-    // check wall collision
+  checkCollision(unit) {
+    this.checkCollisionWall(unit);
+    this.checkCollisionObj(unit);
+  }
+
+  checkCollisionWall(unit) {
     unit.x = Math.min(Math.max(unit.x, 0), this.canvas.width);
     unit.y = Math.min(Math.max(unit.y, 0), this.canvas.height);
-
-    if (unit.x % this.canvas.width == 0) {
-      unit.velX *= -1;
-    }
-
-    if (unit.y % this.canvas.height == 0) {
-      unit.velY *= -1;
-    }
-
-    // check unit collision
-    for (var i = 0; i < this.units.length; i++) {
-      if (i == myI) {
-        continue;
-      }
-
-      var anotherUnit = this.units[i];
-      if (anotherUnit.isDead) {
-        continue;
-      }
-
-      var collided = this.checkUnitCollision(unit, anotherUnit);
-      if (collided) {
-        anotherUnit.isDead = true;
-        unit.isDead = true;
-      }
-    }
   }
 
-  checkUnitCollision(u1, u2) {
-    // simple check
-    if (Math.abs(u1.x - u2.x) > u1.radius + u2.radius
-      || Math.abs(u1.y - u2.y) > u1.radius + u2.radius
-    ) {
-      return false;
-    }
+  checkCollisionObj(unit) {
+    var that = this;
+    this.units.forEach(function (unit2) {
+      if (unit.id == unit2.id) {
+        return;
+      }
 
-    console.log(`collision ${u1.x}, ${u1.y} - ${u2.x}, ${u2.y}. raidus: ${u1.radius}, ${u2.radius}`);
-
-    return true;
+      if (
+        Math.abs(unit.x - unit2.x) < unit.radius + unit2.radius
+        &&
+        Math.abs(unit.y - unit2.y) < unit.radius + unit2.radius
+      ) {
+        console.log(`collision between ${unit.id} & ${unit2.id}`);
+        delete that.units[ unit.id ];
+        delete that.units[ unit2.id ];
+      }
+    });
   }
 
   drawUnits() {
-    for (var i = 0; i < this.units.length; i++) {
-      this.units[i].draw(this.ctx);
-    }
+    var that = this;
+    this.units.forEach(function (unit) {
+      unit.draw(that.ctx);
+    });
   }
 
   drawGrid() {
