@@ -31,6 +31,11 @@ class Game {
   draw() {
     this.moveUnits();
 
+    // if player is dead, stop
+    if (typeof this.units[0] === 'undefined') {
+      return;
+    }
+
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawGrid();
     this.drawUnits();
