@@ -26,7 +26,7 @@ class Unit {
 
     calculateSize() {
         this.radius = 10 + (2 * (this.level - 1));
-        this.border = 0.1 + (0.1 * (this.level - 1));
+        this.border = 0.4 + (0.2 * (this.level - 1));
     }
 
     move() {
@@ -56,13 +56,14 @@ class Unit {
         ctx.fill();
         ctx.stroke();
 
-        ctx.lineWidth = 1;
-        ctx.strokeRect(x - this.radius, y - this.radius, this.radius * 2, this.radius * 2);
-
         if (this.id === 0) {
             ctx.fillStyle = 'white';
             ctx.font = "10px Arial";
             ctx.fillText("P", x - 3, y + 3);
         }
+    }
+
+    toString() {
+        return `(${this.id} @ (${this.x}, ${this.y}))`
     }
 }

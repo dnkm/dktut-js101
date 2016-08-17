@@ -9,7 +9,7 @@ class Game {
     this.procId = -1;
     this.units = [];
 
-    this.spawnUnits(10);
+    this.spawnUnits(20);
   }
 
   spawnUnits(num) {
@@ -83,15 +83,29 @@ class Game {
         Math.abs(unit.y - unit2.y) < unit.radius + unit2.radius
       ) {
 
-        if (unit.id === 0 || unit2.id === 0) {
-          that.stop();
+        if (unit.id === 0) console.log(`collision between ${unit} & ${unit2}`);
+
+        // precise calculatio
+        var dx = Math.abs(unit.x - unit2.x);
+        var dy = Math.abs(unit.y - unit2.y);
+        var distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+        if (distance <= unit.radius + unit2.radius) {
+          if (unit.id === 0) console.log("hit!");
+          that.handleCollision(unit, unit2);
+        } else {
+          if (unit.id === 0) console.log("miss!");
         }
-
-        delete that.units[unit.id];
-        delete that.units[unit2.id];
-
       }
     });
+  }
+
+  handleCollision(unit, unit2) {
+    if (unit.id === 0) {
+      this.stop();
+    }
+
+    delete this.units[unit.id];
+    delete this.units[unit2.id];
   }
 
   getViewport() {
