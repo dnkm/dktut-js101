@@ -99,9 +99,12 @@ class Game {
     var p1 = this.units[0];
     var vp = {};
     vp.x1 = p1.x - this.canvas.width / 2;
-    vp.x2 = p1.x + this.canvas.width / 2;
+    vp.x1 = Math.max(Math.min(vp.x1, this.width - this.canvas.width), 0);
+    vp.x2 = vp.x1 + this.canvas.width;
+
     vp.y1 = p1.y - this.canvas.height / 2;
-    vp.y2 = p1.y + this.canvas.height / 2;
+    vp.y1 = Math.max(Math.min(vp.y1, this.height - this.canvas.height), 0);
+    vp.y2 = vp.y1 + this.canvas.height;
     return vp;
   }
 
