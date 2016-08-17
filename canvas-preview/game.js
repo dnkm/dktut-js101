@@ -3,8 +3,8 @@ class Game {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
 
-    this.width = canvas.width;
-    this.height = canvas.height;
+    this.width = canvas.width + 20;
+    this.height = canvas.height + 20;
 
     this.procId = -1;
     this.units = [];
@@ -14,7 +14,7 @@ class Game {
 
   spawnUnits(num) {
     for (var i = 0; i < num; i++) {
-      var unit = new Unit(i, this.width * Math.random(), this.height * Math.random(), this.canvas, this.ctx);
+      var unit = new Unit(i, this.width * Math.random(), this.height * Math.random());
       this.units.push(unit);
     }
   }
@@ -52,14 +52,14 @@ class Game {
   }
 
   checkCollisionWall(unit) {
-    unit.x = Math.min(Math.max(unit.x, 0), this.canvas.width);
-    unit.y = Math.min(Math.max(unit.y, 0), this.canvas.height);
+    unit.x = Math.min(Math.max(unit.x, 0), this.width);
+    unit.y = Math.min(Math.max(unit.y, 0), this.height);
 
-    if (unit.x % this.canvas.width == 0) {
+    if (unit.x % this.width == 0) {
       unit.velX *= -1;
     }
 
-    if (unit.y % this.canvas.height == 0) {
+    if (unit.y % this.height == 0) {
       unit.velY *= -1;
     }
 
@@ -96,14 +96,14 @@ class Game {
     ctx.strokeStyle = 'gray';
     ctx.lineWidth = 1;
 
-    for (var y = 0; y < this.height; y += this.height / 10) {
+    for (var y = 0; y < this.height; y += this.canvas.height / 10) {
       ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(this.width, y);
       ctx.stroke();
     }
 
-    for (var x = 0; x < this.width; x += this.width / 10) {
+    for (var x = 0; x < this.width; x += this.canvas.width / 10) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, this.height);
