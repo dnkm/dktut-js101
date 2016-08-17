@@ -100,6 +100,8 @@ class Game {
     var vp = {};
     vp.x1 = p1.x - this.canvas.width / 2;
     vp.x2 = p1.x + this.canvas.width / 2;
+    vp.y1 = p1.y - this.canvas.height / 2;
+    vp.y2 = p1.y + this.canvas.height / 2;
 
     this.units.forEach(function (unit) {
       unit.draw(that.ctx, vp);
