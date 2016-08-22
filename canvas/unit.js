@@ -12,11 +12,13 @@ class Unit {
         this.point = 0;
 
         this.calculateSize();
+
+        this.moveTimer = 120;
     }
 
     getRandomVel() {
         var plusOrMinus = (Math.random() < 0.5) ? -1 : 1;
-        return Math.random() * plusOrMinus;
+        return (1 + 0.5 * Math.random()) * plusOrMinus;
     }
 
     getRandomColor() {
@@ -32,12 +34,16 @@ class Unit {
         this.x += this.velX;
         this.y += this.velY;
 
-        //this.x = Math.min(Math.max(this.x, 0), this.canvas.width);
-        //this.y = Math.min(Math.max(this.y, 0), this.canvas.height);
+        this.moveTimer--;
+        if (this.moveTimer <= 0) {
+            this.moveTimer = 30 + 30 * Math.random();
+            this.velX = this.getRandomVel();
+            this.velY = this.getRandomVel();
+        }
     }
 
     draw(ctx) {
-        
+
         ctx.fillStyle = this.color;
         ctx.strokeStyle = 'black';
         ctx.lineWidth = this.border;
@@ -49,5 +55,11 @@ class Unit {
 
         ctx.lineWidth = 1;
         ctx.strokeRect(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
+
+        if (this.id === 0) {
+            ctx.fillStyle = 'white';
+            ctx.font = '10px Arial';
+            ctx.fillText("P", this.x - 3, this.y + 3);
+        }
     }
 }
