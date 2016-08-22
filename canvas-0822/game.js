@@ -132,14 +132,15 @@ class Game {
     var x = parseInt(unit.x);
     var y = parseInt(unit.y);
 
-    for (var dy = y - 3; dy < y + 4; dy++) {
-      for (var dx = x - 3; dx < x + 4; dx++) {
+    for (var dy = y - unit.radius; dy <= y + unit.radius; dy++) {
+      for (var dx = x - unit.radius; dx <= x + unit.radius; dx++) {
         var item = this.items[dx + "," + dy];
 
         if (typeof item !== 'undefined') {
-          console.log("HIT");
-          //this.unit.addPoint();
-          delete this.items[item.id];
+          if (this.didCollide(unit, item)) {
+            //this.unit.addPoint();
+            delete this.items[item.id];
+          }
         }
       }
     }
