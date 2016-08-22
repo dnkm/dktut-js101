@@ -5,7 +5,7 @@ class Item {
         this.y = y;
 
         this.color = this.getRandomColor();
-        this.radius = 5;
+        this.radius = 3;
     }
 
     getRandomColor() {

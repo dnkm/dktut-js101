@@ -11,18 +11,21 @@ class Game {
 
     this.procId = -1;
     this.units = [];
-    this.items = [];
+    this.items = {};
 
     this.spawnUnits(20);
-    this.spawnItems(100);
+    this.spawnItems(200);
 
     this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this), false);
   }
 
   spawnItems(num) {
     for (var i = 0; i < num; i++) {
-      var item = new Item(i, this.width * Math.random(), this.height * Math.random());
-      this.items.push(item);
+      var x = this.width * Math.random();
+      var y = this.height * Math.random();
+
+      var item = new Item(i, x, y);
+      this.items[x + "," + y] = item;
     }
   }
 
@@ -68,8 +71,8 @@ class Game {
 
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.drawGrid(vp);
-    this.drawUnits(vp);
     this.drawItems(vp);
+    this.drawUnits(vp);
   }
 
   moveUnits() {
@@ -160,9 +163,9 @@ class Game {
 
   drawItems(vp) {
     var that = this;
-    this.items.forEach(function (unit) {
-      unit.draw(that.ctx, vp);
-    });
+    for(var key in this.items) {
+      this.items[key].draw(that.ctx, vp);
+    }
   }
 
   drawGrid(vp) {
