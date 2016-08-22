@@ -19,17 +19,9 @@ class Unit {
 
         switch (this.point) {
             case 3:
-                this.level = 2;
-                this.calculateSize();
-                break;
-
             case 6:
-                this.level = 3;
-                this.calculateSize();
-                break;
-
             case 9:
-                this.level = 4;
+                this.level++;
                 this.calculateSize();
                 break;
         }
