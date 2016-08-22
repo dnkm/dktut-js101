@@ -117,7 +117,7 @@ class Game {
 
   handleCollision(unit, unit2) {
     if (unit.id === 0 || unit2.id === 0) {
-      that.stop();
+      this.stop();
     }
 
     delete this.units[unit.id];
