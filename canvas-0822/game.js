@@ -16,7 +16,8 @@ class Game {
     this.spawnUnits(20);
     this.spawnItems(200);
 
-    this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this), false);
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.canvas.addEventListener("mousemove", this.onMouseMove, false);
   }
 
   spawnItems(num) {
@@ -49,6 +50,7 @@ class Game {
 
   stop() {
     clearInterval(this.procId);
+    this.canvas.removeEventListener("mousemove", this.onMouseMove, false);
   }
 
   onMouseMove(e) {
