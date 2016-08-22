@@ -14,6 +14,7 @@ class Game {
 
     this.spawnUnits(20);
 
+    canvas.addEventListener("click", this.onClick, false);
   }
 
   spawnUnits(num) {
@@ -32,6 +33,12 @@ class Game {
     clearInterval(this.procId);
   }
 
+  onClick(e) {
+    var vp = this.getViewport();
+
+    var x = e.clientX + vp.x1;
+    var y = e.clientY + vp.y1;
+  }
 
   draw() {
     this.moveUnits();
