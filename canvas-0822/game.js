@@ -138,7 +138,7 @@ class Game {
 
         if (typeof item !== 'undefined') {
           if (this.didCollide(unit, item)) {
-            //this.unit.addPoint();
+            unit.addPoint();
             delete this.items[item.id];
           }
         }

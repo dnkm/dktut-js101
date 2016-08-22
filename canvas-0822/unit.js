@@ -14,6 +14,27 @@ class Unit {
         this.calculateSize();
     }
 
+    addPoint() {
+        this.point++;
+
+        switch (this.point) {
+            case 3:
+                this.level = 2;
+                this.calculateSize();
+                break;
+
+            case 6:
+                this.level = 3;
+                this.calculateSize();
+                break;
+
+            case 9:
+                this.level = 4;
+                this.calculateSize();
+                break;
+        }
+    }
+
     getRandomVel() {
         var plusOrMinus = (Math.random() < 0.5) ? -1 : 1;
         return (1 + 0.5 * Math.random()) * plusOrMinus;
