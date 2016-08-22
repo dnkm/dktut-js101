@@ -119,16 +119,11 @@ class Game {
 
         if (unit.id === 0) console.log(`collision between ${unit} & ${unit2}`);
 
-        // precise calculatio
-        var dx = Math.abs(unit.x - unit2.x);
-        var dy = Math.abs(unit.y - unit2.y);
-        var distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-        if (distance <= unit.radius + unit2.radius) {
-          if (unit.id === 0) console.log("hit!");
+        // precise calculation
+        if (that.didCollide(unit, unit2)) {
           that.handleCollision(unit, unit2);
-        } else {
-          if (unit.id === 0) console.log("miss!");
         }
+
       }
     });
   }
@@ -149,6 +144,17 @@ class Game {
       }
     }
 
+  }
+
+  didCollide(unit, unit2) {
+    var dx = Math.abs(unit.x - unit2.x);
+    var dy = Math.abs(unit.y - unit2.y);
+    var distance = Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+    if (distance <= unit.radius + unit2.radius) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   handleCollision(unit, unit2) {
