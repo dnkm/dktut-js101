@@ -14,17 +14,10 @@ class Unit {
         this.calculateSize();
     }
 
-    addPoint() {
-        this.point++;
-
-        switch (this.point) {
-            case 3:
-            case 6:
-            case 9:
-                this.level++;
-                this.calculateSize();
-                break;
-        }
+    addPoint(pt) {
+        this.point += pt;
+        this.level = parseInt(this.point / 2) + 1;
+        this.calculateSize();
     }
 
     getRandomVel() {

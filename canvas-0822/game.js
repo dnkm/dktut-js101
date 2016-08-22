@@ -138,7 +138,7 @@ class Game {
 
         if (typeof item !== 'undefined') {
           if (this.didCollide(unit, item)) {
-            unit.addPoint();
+            unit.addPoint(1);
             delete this.items[item.id];
           }
         }
@@ -159,12 +159,27 @@ class Game {
   }
 
   handleCollision(unit, unit2) {
+    if (unit.level == unit2.level) {
+      this.handleLoss(unit);
+      this.handleLoss(unit2);
+    } else if (unit.level > unit2.level) {
+      this.handleWin(unit, unit2);
+      this.handleLoss(unit2);
+    } else {
+      this.handleWin(unit2, unit);
+      this.handleLoss(unit);
+    }
+  }
+
+  handleWin(winner, loser) {
+    winner.addPoint(loser.point);
+  }
+
+  handleLoss(unit) {
     if (unit.id === 0) {
       this.stop();
     }
-
     delete this.units[unit.id];
-    delete this.units[unit2.id];
   }
 
   getViewport() {
