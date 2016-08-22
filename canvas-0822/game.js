@@ -14,7 +14,7 @@ class Game {
 
     this.spawnUnits(20);
 
-    canvas.addEventListener("click", this.onClick.bind(this), false);
+    this.canvas.addEventListener("mousemove", this.onMouseMove.bind(this), false);
   }
 
   spawnUnits(num) {
@@ -38,7 +38,7 @@ class Game {
     clearInterval(this.procId);
   }
 
-  onClick(e) {
+  onMouseMove(e) {
     var vp = this.getViewport();
 
     var x = e.clientX + vp.x1;
