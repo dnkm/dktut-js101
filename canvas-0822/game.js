@@ -19,7 +19,12 @@ class Game {
 
   spawnUnits(num) {
     for (var i = 0; i < num; i++) {
-      var unit = new Unit(i, this.width * Math.random(), this.height * Math.random());
+      if (i==0) {
+var unit = new Unit(i, this.width * Math.random(), this.height * Math.random());
+      } else {
+        var unit = new AIUnit(i, this.width * Math.random(), this.height * Math.random());
+      }
+      
       this.units.push(unit);
     }
   }
