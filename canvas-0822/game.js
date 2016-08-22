@@ -14,7 +14,7 @@ class Game {
 
     this.spawnUnits(20);
 
-    canvas.addEventListener("click", this.onClick, false);
+    canvas.addEventListener("click", this.onClick.bind(this), false);
   }
 
   spawnUnits(num) {
@@ -38,6 +38,9 @@ class Game {
 
     var x = e.clientX + vp.x1;
     var y = e.clientY + vp.y1;
+
+    this.units[0].x = x;
+    this.units[0].y = y;
   }
 
   draw() {
