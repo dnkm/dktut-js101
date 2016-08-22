@@ -26,11 +26,21 @@ class Unit {
     calculateSize() {
         this.radius = 10 + (2 * (this.level - 1));
         this.border = 0.4 + (0.2 * (this.level - 1));
+        this.velMax = 2;
     }
 
     move() {
         this.x += this.velX;
         this.y += this.velY;
+    }
+
+    moveTowards(x, y) {
+        var dx = x - this.x;
+        var dy = y - this.y;
+
+        var angle = Math.atan2(dy, dx);
+        this.velX = this.velMax * Math.cos(angle);
+        this.velY = this.velMax * Math.sin(angle);
     }
 
     draw(ctx, vp) {
