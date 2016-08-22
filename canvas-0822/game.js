@@ -12,9 +12,10 @@ class Game {
     this.procId = -1;
     this.units = [];
     this.items = {};
+    this.itemCount = 100;
 
     this.spawnUnits(20);
-    this.spawnItems(200);
+    this.spawnItems(this.itemCount);
 
     this.onMouseMove = this.onMouseMove.bind(this);
     this.canvas.addEventListener("mousemove", this.onMouseMove, false);
@@ -68,6 +69,11 @@ class Game {
     // if player is dead, stop
     if (typeof this.units[0] === 'undefined') {
       return;
+    }
+
+    if (this.itemCount < 90) {
+      this.spawnItems(100);
+      this.itemCount += 100;
     }
 
     var vp = this.getViewport();
@@ -142,6 +148,7 @@ class Game {
           if (this.didCollide(unit, item)) {
             unit.addPoint(1);
             delete this.items[item.id];
+            this.itemCount--;
           }
         }
       }
