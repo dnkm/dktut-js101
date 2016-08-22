@@ -3,13 +3,17 @@ class Game {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
 
-    this.width = canvas.width + 100;
-    this.height = canvas.height + 100;
+    this.width = canvas.width * 2;
+    this.height = canvas.height * 2;
+
+    this.gridWidth = 100;
+    this.fps = 60;
 
     this.procId = -1;
     this.units = [];
 
     this.spawnUnits(20);
+
   }
 
   spawnUnits(num) {
@@ -21,12 +25,13 @@ class Game {
 
   start() {
     var draw = this.draw.bind(this);
-    this.procId = setInterval(draw, 1000 / 60);
+    this.procId = setInterval(draw, 1000 / this.fps);
   }
 
   stop() {
     clearInterval(this.procId);
   }
+
 
   draw() {
     this.moveUnits();
@@ -135,14 +140,14 @@ class Game {
     ctx.strokeStyle = 'gray';
     ctx.lineWidth = 1;
 
-    for (var y = 0; y < this.height; y += this.height / 10) {
+    for (var y = 0; y < this.height; y += this.gridWidth) {
       ctx.beginPath();
       ctx.moveTo(0 - vp.x1, y - vp.y1);
       ctx.lineTo(this.width - vp.x1, y - vp.y1);
       ctx.stroke();
     }
 
-    for (var x = 0; x < this.width; x += this.width / 10) {
+    for (var x = 0; x < this.width; x += this.gridWidth) {
       ctx.beginPath();
       ctx.moveTo(x - vp.x1, 0 - vp.y1);
       ctx.lineTo(x - vp.x1, this.height - vp.y1);
@@ -151,8 +156,8 @@ class Game {
 
     ctx.fillStyle = 'gray';
     ctx.font = '10px Arial';
-    for (var y = 0; y < this.height; y += this.height / 10) {
-      for (var x = 0; x < this.width; x += this.width / 10) {
+    for (var y = 0; y < this.height; y += this.gridWidth) {
+      for (var x = 0; x < this.width; x += this.gridWidth) {
         ctx.fillText(`${x}`, x - vp.x1, y - vp.y1);
       }
     }
