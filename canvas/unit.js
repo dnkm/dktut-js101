@@ -12,8 +12,6 @@ class Unit {
         this.point = 0;
 
         this.calculateSize();
-
-        this.moveTimer = 120;
     }
 
     getRandomVel() {
@@ -28,18 +26,22 @@ class Unit {
     calculateSize() {
         this.radius = 10 + (2 * (this.level - 1));
         this.border = 0.1 + (0.1 * (this.level - 1));
+        this.velMax = 2;
     }
 
     move() {
         this.x += this.velX;
         this.y += this.velY;
+    }
 
-        this.moveTimer--;
-        if (this.moveTimer <= 0) {
-            this.moveTimer = 30 + 30 * Math.random();
-            this.velX = this.getRandomVel();
-            this.velY = this.getRandomVel();
-        }
+    moveTowards(x,y) {
+        var dx = x - this.x;
+        var dy = y - this.y;
+
+        var angle = Math.atan2(dy, dx);
+
+        this.velX = this.velMax * Math.cos(angle);
+        this.velY = this.velMax * Math.sin(angle);
     }
 
     draw(ctx, vp) {
